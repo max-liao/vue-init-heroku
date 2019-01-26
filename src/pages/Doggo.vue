@@ -2,8 +2,10 @@
   <div class="about">
     <h1>{{ msg }}</h1>
     <button class="btn-primary" @click.prevent="handleClick">
-      <slot></slot>(clicked - {{count}})
+      <slot></slot>(Random Doggo - {{count}})
     </button>
+    <br>
+    <img v-if="count > 0" v-bind:src="dog" />
   </div>
 </template>
 
@@ -11,10 +13,10 @@
 import API from '../api/API'
 
 export default {
-  name: 'about',
+  name: 'Doggos',
   data () {
     return {
-      msg: 'About Us',
+      msg: 'Doggo API',
       count: 0,
       dog: {},
       breeds: []
@@ -34,3 +36,9 @@ export default {
   }
 }
 </script>
+
+<style>
+img {
+  margin: 0 auto;
+}
+</style>

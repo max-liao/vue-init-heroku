@@ -1,14 +1,18 @@
 <template>
   <div id="app">
     <router-link to='/'>Home</router-link>
-    <router-link to="/about">About</router-link>
+    <router-link to="/doggo">Doggos</router-link>
+    <router-link to="/cryptos">Cryptos</router-link>
     <router-view/>
   </div>
 </template>
 
 <script>
+import {store} from './assets/vuex.js'
+
 export default {
-  name: 'App'
+  name: 'App',
+  store
 }
 </script>
 

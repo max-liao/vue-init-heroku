@@ -5,17 +5,16 @@
     <p>Name: {{ coin.name }}</p>
     <p>Symbol: {{ coin.symbol }}</p>
     <p>Price (USD): {{ coin.price_usd }}</p>
-    <Btns v-for="(coins, index) in AllCoins" :key="`coin-${index}`" v-bind:coin="coins"></Btns>
+    <Btns v-for="(coins, index) in $store.getters.coinsGetter" :key="`coin-${index}`" v-bind:coin="coins"></Btns>
   </div>
 </template>
 <script>
 import axios from 'axios'
 import Btns from './CryptoButton'
-import { serverBus } from '../main'
+// import { serverBus } from '../main'
 
 export default {
   name: 'Coins',
-  props: ['AllCoins'],
   components: {
     Btns
   },
@@ -27,14 +26,9 @@ export default {
 
   created () {
     this.fetchData()
-    serverBus.$on('sendCoins', (coins) => {
-      console.log(coins)
-      this.AllCoins = coins
-    })
-    console.log(this.AllCoins)
-  },
-
-  mounted () {
+    // serverBus.$on('sendCoins', (coins) => {
+    //   this.AllCoins = coins
+    // })
   },
 
   watch: {
@@ -49,7 +43,6 @@ export default {
         )
         .then(resp => {
           this.coin = resp.data[0]
-          // console.log(resp)
         })
         .catch(err => {
           console.log(err)
