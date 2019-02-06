@@ -2,16 +2,15 @@
 <template>
   <div>
     <br>
-    <p>Name: {{ coin.name }}</p>
+    <Btns v-for="(coins, index) in $store.getters.coinsGetter" :key="`coin-${index}`" v-bind:coin="coins"></Btns>
+      <p>Name: {{ coin.name }}</p>
     <p>Symbol: {{ coin.symbol }}</p>
     <p>Price (USD): {{ coin.price_usd }}</p>
-    <Btns v-for="(coins, index) in $store.getters.coinsGetter" :key="`coin-${index}`" v-bind:coin="coins"></Btns>
   </div>
 </template>
 <script>
-import axios from 'axios'
 import Btns from './CryptoButton'
-// import { serverBus } from '../main'
+import API from '../api/API'
 
 export default {
   name: 'Coins',
@@ -26,9 +25,6 @@ export default {
 
   created () {
     this.fetchData()
-    // serverBus.$on('sendCoins', (coins) => {
-    //   this.AllCoins = coins
-    // })
   },
 
   watch: {
@@ -36,11 +32,8 @@ export default {
   },
 
   methods: {
-    fetchData () {
-      axios
-        .get(
-          'https://api.coinmarketcap.com/v1/ticker/' + this.$route.params.id + '/'
-        )
+    async fetchData () {
+      await API.getCoin(this.$route.params.id)
         .then(resp => {
           this.coin = resp.data[0]
         })

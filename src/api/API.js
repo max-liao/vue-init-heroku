@@ -14,12 +14,8 @@ export default {
   },
   getCoin: function (coin) {
     return axios.get('https://api.coinmarketcap.com/v1/ticker/' + coin + '/')
-    // .then(resp => {
-    //   this.coin = resp.data[0]
-    //   // console.log(resp)
-    // })
-    // .catch(err => {
-    //   console.log(err)
-    // })
+  },
+  getAllCoins: function () {
+    return axios.get('https://api.coinmarketcap.com/v1/ticker/')
   }
 }

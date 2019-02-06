@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <h1>{{ $store.getters.helloGetter }}</h1>
-    <img v-bind:src = imgSrc style="display:block; margin:auto">
     <Btns v-for="(coins, index) in $store.getters.coinsGetter" :key="`coin-${index}`" v-bind:coin="coins"></Btns>
     <br>
     <br>
@@ -31,11 +30,16 @@ export default {
     InputCoin
   },
   methods: {
-    addCoin: function (event) {
-      if (event.target.value) {
-        this.$store.commit('addCoin', event.target.value)
-      } else if (this.inputText) {
-        this.$store.commit('addCoin', this.inputText)
+    addCoin: function (event, value) {
+      const coins = this.$store.getters.coinsGetter
+      if (event.type === 'click' && !coins.includes(value)) {
+        if (value) {
+          this.$store.commit('addCoin', value)
+        }
+      } else if (this.inputText && !coins.includes(this.inputText)) {
+        if (this.inputText) {
+          this.$store.commit('addCoin', this.inputText)
+        }
       }
     }
   }
